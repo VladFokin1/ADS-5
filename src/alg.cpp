@@ -71,10 +71,10 @@ std::string infx2pstfx(std::string inf) {
 int eval(std::string pref) {
   TStack <int, 100> stack1;
   int result = 0;
-  for (int i = 0; i < pref.length (); i++) {
+  for (int i = 0; i < pref.length(); i++) {
       char sym = pref[i];
       if (prior(sym) == 4) {
-          stack1.push (sym - '0');
+          stack1.push(sym - '0');
       } else if (prior(sym) < 4) {
           int temp1 = stack1.get();
           stack1.pop();
