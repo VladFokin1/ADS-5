@@ -36,7 +36,9 @@ std::string infx2pstfx(std::string inf) {
             result += sym;
             result += ' ';
         } else {
-            if (symPrior == 0 || symPrior > prior(stack.get()) || stack.isEmpty()) {
+            bool empty = stack.isEmpty();
+            int priorTop = prior(stack.get());
+            if (symPrior == 0 || symPrior > priorTop || empty) {
                 stack.push(sym);
             } else if (symPrior == 1) {
                 while (prior(stack.get()) != 0) {
@@ -67,12 +69,12 @@ std::string infx2pstfx(std::string inf) {
 }
 
 int eval(std::string pref) {
-  TStack < int, 100 > stack1;
+  TStack <int, 100> stack1;
   int result = 0;
   for (int i = 0; i < pref.length (); i++) {
       char sym = pref[i];
       if (prior(sym) == 4) {
-	  stack1.push (sym - '0');
+          stack1.push (sym - '0');
       } else if (prior(sym) < 4) {
           int temp1 = stack1.get();
           stack1.pop();
