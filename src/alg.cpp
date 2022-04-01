@@ -8,9 +8,22 @@ int prior(char op) {
       case '(': return 0; 
       case ')': return 1; 
       case '+': case '-': return 2; 
-      case '*': case '/': return 3; 
+      case '*': case '/': return 3;
+      case ' ': return 5;
       default: return 4;
     }
+}
+
+int calcul(char oper, int a, int b) {
+    switch (oper) {
+        case '+': return (b + a);
+        case '-': return (b - a);
+        case '*': return (b * a);
+        case '/':
+            if (a != 0)
+            return b / a;
+        default: return 0;
+  }
 }
   
 std::string infx2pstfx(std::string inf) {
@@ -55,6 +68,20 @@ std::string infx2pstfx(std::string inf) {
 }
 
 int eval(std::string pref) {
-  
-  return 0;
+  TStack < int, 100 > stack1;
+  int result = 0;
+  for (int i = 0; i < pref.length (); i++) {
+      char sym = pref[i];
+      if (prior(sym) == 4) {
+	  stack1.push (sym - '0');
+	  } else if (prior(sym) < 4) {
+	      int temp1 = stack1.get();
+	      stack1.pop();
+	      int temp2 = stack1.get();
+	      stack1.pop();
+	      stack1.push(calcul(sym, temp1, temp2));
+	      }
+   }
+  result = stack1.get();
+  return result;
 }
